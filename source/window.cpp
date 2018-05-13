@@ -2,10 +2,10 @@
 
 #include <cstdio>
 #ifdef NANOVG_GLEW
-#	include <GL/glew.h>
+#include <GL/glew.h>
 #endif
 #ifdef __APPLE__
-#	define GLFW_INCLUDE_GLCOREARB
+#define GLFW_INCLUDE_GLCOREARB
 #endif
 #define GLFW_INCLUDE_GLEXT
 #include <GLFW/glfw3.h>

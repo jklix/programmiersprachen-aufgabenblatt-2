@@ -2,16 +2,72 @@
 #include <GLFW/glfw3.h>
 #include <utility>
 #include <cmath>
+#include <vector>
+#include "vec2.hpp"
+#include "mat2.hpp"
+#include "circle.hpp"
+#include "rectangle.hpp"
+#include "color.hpp"
 
 
 int main(int argc, char* argv[])
 {
   Window win{std::make_pair(800,800)};
 
+
+
   while (!win.should_close()) {
     if (win.get_key(GLFW_KEY_ESCAPE) == GLFW_PRESS) {
       win.close();
     }
+
+    std::vector<Circle> kreis;
+    std::vector<Rectangle> rechteck;
+
+    
+    Vec2 p_ = {400.0f, 400.0f};
+    Color e_ = {1.0f, 0.0f, 1.0f};
+
+    Rectangle r {p_, 100.0f, 100.0f, e_};
+    r.draw(win, e_);
+
+    Circle kr {270, p_};
+    kr.draw(win);
+
+    //Rechteck
+    //rechteck[1] = {p_, 100.0f, 100.0f, e_};
+    /*rechteck[1].draw(win);
+
+    
+    //Kreis
+    kreis[1] = {100.0f, p_, e_};
+    kreis[1].draw(win);
+    */
+    
+
+
+
+    //Uhr
+    float z = win.get_time();
+    float sek = z;
+    float min = z/60;
+    float stu = z / 3600;
+
+    float winkel = - M_PI * 2 / 60;
+
+    Vec2 mi = {400.0f ,400.0f};
+    Color c = {0.0f, 0.0f, 0.0f};
+
+    Circle uhr = {200, mi, c};
+    uhr.draw(win);
+
+    win.draw_line(400.0, 400.0f, 400.0f -sin(winkel * sek) * 200.0f, 400.0f - cos(winkel * sek) * 200.0f, 0.0f, 0.0f, 0.0f);
+    win.draw_line(400.0, 400.0f, 400.0f -sin(winkel * min) * 160.0f, 400.0f - cos(winkel * min) * 160.0f, 0.0f, 0.0f, 0.0f);
+    win.draw_line(400.0, 400.0f, 400.0f -sin(winkel * stu) * 100.0f, 400.0f - cos(winkel * stu) * 100.0f, 0.0f, 0.0f, 0.0f);
+
+
+
+
 
     bool left_pressed = win.get_mouse_button(GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS;
 
@@ -46,6 +102,7 @@ int main(int argc, char* argv[])
 
     std::string text = "mouse position: (" + std::to_string(m.first) + ", " + std::to_string(m.second) + ")";
     win.draw_text(10, 5, 35.0f, text);
+
 
     win.update();
   }
